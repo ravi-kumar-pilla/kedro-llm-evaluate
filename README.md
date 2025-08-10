@@ -135,7 +135,7 @@ The plugin is particularly valuable for:
 
 ## 📄 License
 
-This project is licensed under the the [Apache 2.0](https://github.com/ravi-kumar-pilla/kedro-llm-evaluate/blob/main/LICENSE) License.
+This project is licensed under the [Apache 2.0](https://github.com/ravi-kumar-pilla/kedro-llm-evaluate/blob/main/LICENSE) License.
 
 ## 🔗 Related Links
 
