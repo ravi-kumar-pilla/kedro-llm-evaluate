@@ -1,0 +1,43 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "kedro-llm-evaluate"
+authors = [
+    {name = "Kedro"}
+]
+description = "Kedro plugin for evaluating LLM outputs"
+readme = {file = "README.md", content-type = "text/markdown"}
+requires-python = ">=3.9"
+keywords = [
+    "pipelines",
+    "machine learning",
+    "data pipelines",
+    "data science",
+    "data engineering",
+    "visualisation",
+    "llm",
+    "evaluation",
+    "logging",
+    "metrics",
+]
+license = {text = "Apache Software License (Apache 2.0)"}
+dynamic = ["dependencies", "version"]
+
+[project.urls]
+Homepage = "https://kedro.org"
+Source = "https://github.com/ravi-kumar-pilla/kedro-llm-evaluate"
+Documentation = "https://docs.kedro.org/projects/kedro-viz"
+Tracker = "https://github.com/kedro-org/kedro-viz/issues"
+
+[project.optional-dependencies]
+opik = [
+  "opik>=1.0.0"
+]
+
+[project.entry-points."kedro.hooks"]
+kedro-llm-evaluator-hook = "kedro_llm_evaluate.hooks:evaluation_hook_instance"
+
+[tool.hatch.version]
+path = "kedro_llm_evaluate/__init__.py"

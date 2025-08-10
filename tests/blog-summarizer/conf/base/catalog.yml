@@ -1,0 +1,7 @@
+raw_blog_posts:
+  type: pandas.CSVDataset
+  filepath: data/01_raw/blog_posts.csv
+
+summarized_blog_posts:
+  type: json.JSONDataset
+  filepath: data/02_intermediate/summarized_blog_posts.json

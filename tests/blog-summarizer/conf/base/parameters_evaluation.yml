@@ -1,0 +1,6 @@
+enabled: true
+evaluator: opik
+
+opik:
+  project_name: blog_summarizer
+  host: http://localhost:5173/api
