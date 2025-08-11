@@ -1,4 +1,8 @@
 ipython>=8.10
 jupyterlab>=3.0
-kedro~=0.19.12
+kedro~=1.0.0
 notebook
+ollama
+litellm==1.74.15
+kedro-datasets[pandas.CSVDataset]
+groq

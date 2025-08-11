@@ -1,9 +1,5 @@
-from groq import Groq
 from kedro_llm_evaluate.tracing import trace_llm
-import os
-
-# Initialize Groq client once
-groq_client = Groq(api_key=os.getenv("GROQ_API_KEY"))
+import ollama
 
 def summarize_blog_posts(blog_posts_df) -> list[dict]:
     summaries = []   
@@ -14,17 +10,20 @@ def summarize_blog_posts(blog_posts_df) -> list[dict]:
             + post["content"]
         )
 
-        with trace_llm(model="llama3-8b-8192", prompt=prompt) as span:
-            response = groq_client.chat.completions.create(
-                model="llama3-8b-8192",
+        with trace_llm(model="llama3", prompt=prompt) as span:
+            response = ollama.chat(
+                model="llama3",
                 messages=[
                     {"role": "system", "content": "You are a helpful summarizer."},
                     {"role": "user", "content": prompt}
                 ],
-                temperature=0.7,
-                max_tokens=2048
+                options={
+                    "temperature": 0.7,
+                    "num_predict": 2048
+                }
             )
-            summary = response.choices[0].message.content
+            
+            summary = response.message.content
             
             # Attach the output onto the span so end_trace can pick it up:
             span.span_output = summary

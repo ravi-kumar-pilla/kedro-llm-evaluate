@@ -6,6 +6,21 @@ A Kedro plugin for evaluating and tracing Large Language Model (LLM) outputs in 
 
 `kedro_llm_evaluate` is a Kedro plugin that seamlessly integrates LLM evaluation and tracing capabilities into your Kedro pipelines. It provides automated tracking, evaluation metrics, and observability for LLM-powered data processing workflows, addressing the critical need for monitoring and improving LLM performance in production data pipelines.
 
+**LLM evaluation frameworks comparison matrix:**
+
+| Framework                 | Focus                                          | Pros                                                                                        | Cons                                                             | Community & OSS                                               | Best Fit in Kedro                                           |
+| ------------------------- | ---------------------------------------------- | ------------------------------------------------------------------------------------------- | ---------------------------------------------------------------- | ------------------------------------------------------------- | ----------------------------------------------------------- |
+| **DeepEval**              | Python-native testing for LLMs                 | ✅ Pytest-like API<br>✅ 14+ metrics incl. hallucination<br>✅ Synthetic dataset generation    | ⚠️ Early stage<br>⚠️ Less GUI or dashboard support               | 🟡 Medium: Growing GitHub stars, active issues                | ✅ Easy Kedro integration as a node with prompt/result input |
+| **MLFlow LLM Evaluate**   | LLM eval inside MLFlow ecosystem               | ✅ Familiar for MLFlow users<br>✅ Auto logging + experiment tracking                         | ⚠️ Not specialized for LLMs<br>⚠️ Limited metrics now            | 🟢 Large MLFlow community<br>🟡 Limited LLM-specific traction | 🟡 Best for orgs already using MLFlow with Kedro            |
+| **RAGAs**                 | RAG pipeline quality (faithfulness, precision) | ✅ RAG-focused metrics<br>✅ LangChain integration<br>✅ Open source                           | ⚠️ Narrow scope: RAG only<br>⚠️ Docs are minimal                 | 🟡 Medium: Used in LangChain projects                         | ✅ Plug into Kedro RAG pipelines as post-processing node     |
+| **Deepchecks**            | General ML + LLM validation (fairness, bias)   | ✅ Enterprise-grade ML testing<br>✅ Bias/fairness modules                                    | ⚠️ LLM support is recent<br>⚠️ May be heavy for simple LLM eval  | 🟢 Active OSS, recognized brand                               | 🟡 Best for teams also auditing traditional ML pipelines    |
+| **Arize Phoenix**         | Open-source observability + eval               | ✅ LangChain + LlamaIndex support<br>✅ Nice visual dashboards<br>✅ Multi-model eval          | ⚠️ High infra complexity<br>⚠️ Early adoption stage              | 🟡 Medium community<br>Backed by Arize                        | 🟡 Better fit with Kedro if observability is in scope       |
+| **OpenAI Evals**          | Benchmark OpenAI models                        | ✅ Trusted by OpenAI<br>✅ Integration with GPT evals<br>✅ Flexible YAML format               | ⚠️ Tied to OpenAI models<br>⚠️ Less plug-and-play                | 🟡 Medium adoption, but not very active in open-source        | 🟡 Use for evaluating OpenAI-specific tasks in Kedro        |
+| **LM Evaluation Harness** | Academic benchmarks for LLMs                   | ✅ 60+ tasks<br>✅ Supports HuggingFace, GPT<br>✅ Gold standard for research                  | ⚠️ Heavy setup<br>⚠️ Not easy to extend<br>⚠️ No RAG/prompt eval | 🟢 Active research community (EleutherAI)                     | 🟡 Best for model-to-model comparisons, not pipelines       |
+| **PromptBench**           | Prompt engineering benchmarking                | ✅ Supports prompt variations<br>✅ Adversarial testing<br>✅ Supports multiple metrics        | ⚠️ Limited maturity<br>⚠️ Small community                        | 🔴 Low OSS adoption right now                                 | 🟡 Useful in Kedro for testing prompt versions              |
+| **LangFuse**              | Full LLM observability + eval + tracing        | ✅ Tracing, evals, prompt logs<br>✅ Beautiful dashboard<br>✅ Open source, LangChain friendly | ⚠️ Requires infra setup<br>⚠️ Still maturing                     | 🟡 Growing GitHub stars<br>✅ DevRel team active               | ✅ Add as monitoring + evaluation layer to Kedro pipelines   |
+| **Opik (Comet)**          | YAML-defined LLM eval pipeline                 | ✅ Clean YAML syntax<br>✅ Flexible eval types<br>✅ Open source<br>✅ Comet integration        | ⚠️ Lacks RAG-specific metrics<br>⚠️ Still maturing ecosystem     | 🟡 Mid-sized user base, Comet-backed                          | ✅ Best plug-and-play choice for Kedro node eval step        |
+
 ## 🏗️ Architecture
 
 The plugin follows a modular architecture with the following components:
@@ -42,6 +57,7 @@ kedro_llm_evaluate/
 - Python 3.9+
 - Kedro project
 - Optional: Opik account for advanced evaluation features
+- Optional: Docker if running Opik locally (https://www.comet.com/docs/opik/self-host/local_deployment)
 
 ## 🚀 Installation
 
@@ -51,7 +67,7 @@ pip install kedro-llm-evaluate
 
 For Opik integration:
 ```bash
-pip install kedro-llm-evaluate[opik]
+pip install "kedro-llm-evaluate[opik]"
 ```
 
 ## 📖 Usage

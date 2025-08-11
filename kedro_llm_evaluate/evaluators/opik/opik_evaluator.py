@@ -16,7 +16,7 @@ class OpikEvaluator(BaseLLMEvaluator):
         """
         # create trace with initial input
         self._current_trace = self.client.trace(
-            name=metadata.get("trace_name", "blog_summarizer_trace"),
+            name=metadata.get("trace_name", "blog_summarizer_test_trace"),
             input={"prompt": metadata["prompt"], "model": metadata["model"]},
         )
         return self._current_trace
@@ -31,7 +31,7 @@ class OpikEvaluator(BaseLLMEvaluator):
 
         # log the LLM call itself as a span
         self._current_trace.span(
-            name=metadata.get("span_name", "blog_summarizer_span"),
+            name=metadata.get("span_name", "blog_summarizer_test_span"),
             type="llm",
             input={"prompt": metadata["prompt"], "model": metadata["model"]},
             output={"response": metadata["output"]},
@@ -52,7 +52,7 @@ class OpikEvaluator(BaseLLMEvaluator):
         #     model="groq/llama3-8b-8192",
         #     scoring_metrics=[AnswerRelevance(model="groq/llama3-8b-8192"), Hallucination(model="groq/llama3-8b-8192")]
         # )
-        metric = AnswerRelevance(model="groq/llama3-8b-8192", project_name="blog_summarizer")
+        metric = AnswerRelevance(model="groq/llama3-8b-8192", project_name="blog_summarizer_test")
         metric.score(
             input=metadata["prompt"],
             output=metadata["output"],

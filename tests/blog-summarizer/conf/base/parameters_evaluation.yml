@@ -2,5 +2,5 @@ enabled: true
 evaluator: opik
 
 opik:
-  project_name: blog_summarizer
+  project_name: blog_summarizer_test
   host: http://localhost:5173/api
